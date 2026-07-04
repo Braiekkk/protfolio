@@ -2,9 +2,15 @@
 
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { motion } from 'framer-motion';
 import HeroInfoBox from './HeroInfoBox';
 import { HERO_INFO_BOXES, HeroInfoBoxItem } from './heroSideContent';
 import { MountainWireframe, GlobeWireframe } from './HeroDecorations';
+
+// Cards reveal after the hero content has had time to appear, then in
+// left/right pairs (row by row) rather than all at once.
+const CARDS_START_DELAY = 0.9;
+const PAIR_STAGGER = 0.25;
 
 const renderBody = (item: HeroInfoBoxItem) => {
   if (item.techStack) {
@@ -60,12 +66,17 @@ const renderBody = (item: HeroInfoBoxItem) => {
           {item.title}
         </Typography>
       )}
-      {item.thumbnail && (
-        <Box sx={{
-          width: '100%', height: 56, borderRadius: '4px', mb: 1,
-          background: 'linear-gradient(135deg, rgba(255,102,0,0.25), rgba(255,102,0,0.05))',
-          border: '1px solid rgba(255,102,0,0.3)',
-        }} />
+      {item.thumbnailSrc && (
+        <Box
+          component="img"
+          src={item.thumbnailSrc}
+          alt="GitHub contribution activity"
+          sx={{
+            width: '100%', height: 56, borderRadius: '4px', mb: 1,
+            objectFit: 'contain', backgroundColor: '#1a0600',
+            border: '1px solid rgba(255,102,0,0.3)',
+          }}
+        />
       )}
       <Typography sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
         {item.paragraph}
@@ -87,17 +98,31 @@ const columnSx = (side: 'left' | 'right') => ({
 const HeroSideColumns: React.FC = () => (
   <>
     <Box sx={columnSx('left')}>
-      {HERO_INFO_BOXES.left.map((item) => (
-        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
-          {renderBody(item)}
-        </HeroInfoBox>
+      {HERO_INFO_BOXES.left.map((item, index) => (
+        <motion.div
+          key={item.id}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: CARDS_START_DELAY + index * PAIR_STAGGER }}
+        >
+          <HeroInfoBox icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
+            {renderBody(item)}
+          </HeroInfoBox>
+        </motion.div>
       ))}
     </Box>
     <Box sx={columnSx('right')}>
-      {HERO_INFO_BOXES.right.map((item) => (
-        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
-          {renderBody(item)}
-        </HeroInfoBox>
+      {HERO_INFO_BOXES.right.map((item, index) => (
+        <motion.div
+          key={item.id}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: CARDS_START_DELAY + index * PAIR_STAGGER }}
+        >
+          <HeroInfoBox icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
+            {renderBody(item)}
+          </HeroInfoBox>
+        </motion.div>
       ))}
     </Box>
   </>

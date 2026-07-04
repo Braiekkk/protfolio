@@ -16,7 +16,7 @@ export interface HeroInfoBoxItem {
   paragraph?: string;
   bullets?: string[];
   techStack?: { name: string; icon: React.ReactNode }[];
-  thumbnail?: boolean;
+  thumbnailSrc?: string;
   decoration?: 'mountain' | 'globe';
   minHeight?: number;
   cta?: { label: string; href: string };
@@ -61,8 +61,8 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       icon: Star,
       label: 'Featured Project',
       title: 'AI Analytics Dashboard',
-      paragraph: 'Real-time insights and predictions powered by machine learning.',
-      thumbnail: true,
+      paragraph: 'A live snapshot of my GitHub activity — commits and contributions over the past two weeks.',
+      thumbnailSrc: 'https://github-readme-activity-graph.vercel.app/graph?username=braiekkk&days=14&hide_title=true&hide_border=true&area=true&color=ff6600&line=ff6600&point=ff6600&area_color=ff6600&bg_color=1a0600',
       minHeight: 260,
       cta: { label: 'VIEW PROJECT', href: '#projects-section' },
     },
