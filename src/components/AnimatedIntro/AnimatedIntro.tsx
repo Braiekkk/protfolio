@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { FaJava } from 'react-icons/fa';
 import HeroContent from './HeroContent';
+import HeroSideColumns from './HeroSideColumns';
 
 const floatingIcons = [
   // top-left corner
@@ -71,6 +72,8 @@ const AnimatedIntro: React.FC = () => {
           <FaJava size={icon.size} />
         </motion.div>
       ))}
+
+      <HeroSideColumns />
 
       {/* Content box — constrained width */}
       <Box sx={{

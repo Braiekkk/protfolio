@@ -96,35 +96,37 @@ export default function Page() {
       <div className="flex flex-col items-center">
 
         {/* Projects */}
-        <button
-          onClick={() => setProjectsOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-        >
-          <BlurFadeText text="<Projects>" className={`code-text ${textClass}`} />
-        </button>
-        <AnimatePresence initial={false}>
-          {projectsOpen && (
-            <motion.div
-              key="projects"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: 'easeInOut' }}
-              style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              {projects.map((project, index) => (
-                <Box key={index} sx={{ mb: 8 }}>
-                  <ProjectShowcase
-                    gifUrl={project.gifUrl}
-                    description={project.description}
-                    techStack={project.techStack}
-                  />
-                </Box>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <BlurFadeText text="</Projects>" className={`code-text mb-8 ${textClass}`} />
+        <Box id="projects-section" component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <button
+            onClick={() => setProjectsOpen(o => !o)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            <BlurFadeText text="<Projects>" className={`code-text ${textClass}`} />
+          </button>
+          <AnimatePresence initial={false}>
+            {projectsOpen && (
+              <motion.div
+                key="projects"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              >
+                {projects.map((project, index) => (
+                  <Box key={index} sx={{ mb: 8 }}>
+                    <ProjectShowcase
+                      gifUrl={project.gifUrl}
+                      description={project.description}
+                      techStack={project.techStack}
+                    />
+                  </Box>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <BlurFadeText text="</Projects>" className={`code-text mb-8 ${textClass}`} />
+        </Box>
 
         {/* Skills */}
         <button
@@ -152,43 +154,45 @@ export default function Page() {
         <BlurFadeText text="</Skills>" className={`code-text mb-8 ${textClass}`} />
 
         {/* About me */}
-        <button
-          onClick={() => setAboutOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-        >
-          <BlurFadeText text="<About me>" className={`code-text ${textClass}`} />
-        </button>
-        <AnimatePresence initial={false}>
-          {aboutOpen && (
-            <motion.div
-              key="about"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: 'easeInOut' }}
-              style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <Box sx={{ width: '80%', maxWidth: '600px', margin: '0 auto', height: '60%', maxHeight: '600px' }}>
-                <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
-                  {carouselItems.map((item, index) => (
-                    <Box key={index} sx={{ mb: 8, textAlign: 'center' }}>
-                      <Image
-                        src={item.imageUrl}
-                        alt={`Carousel item ${index + 1}`}
-                        width={600}
-                        height={400}
-                        loading="lazy"
-                        quality={85}
-                      />
-                      <p>{item.description}</p>
-                    </Box>
-                  ))}
-                </Carousel>
-              </Box>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <BlurFadeText text="</About me>" className={`code-text mb-8 ${textClass}`} />
+        <Box id="about-section" component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <button
+            onClick={() => setAboutOpen(o => !o)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            <BlurFadeText text="<About me>" className={`code-text ${textClass}`} />
+          </button>
+          <AnimatePresence initial={false}>
+            {aboutOpen && (
+              <motion.div
+                key="about"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              >
+                <Box sx={{ width: '80%', maxWidth: '600px', margin: '0 auto', height: '60%', maxHeight: '600px' }}>
+                  <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
+                    {carouselItems.map((item, index) => (
+                      <Box key={index} sx={{ mb: 8, textAlign: 'center' }}>
+                        <Image
+                          src={item.imageUrl}
+                          alt={`Carousel item ${index + 1}`}
+                          width={600}
+                          height={400}
+                          loading="lazy"
+                          quality={85}
+                        />
+                        <p>{item.description}</p>
+                      </Box>
+                    ))}
+                  </Carousel>
+                </Box>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <BlurFadeText text="</About me>" className={`code-text mb-8 ${textClass}`} />
+        </Box>
 
       </div>
     </main>
