@@ -31,7 +31,7 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       id: 'about',
       icon: User,
       label: 'About Me',
-      paragraph: 'AI Software Engineer passionate about building intelligent, scalable, and impactful solutions.',
+      paragraph: "I'm a chill guy :D",
       cta: { label: 'KNOW MORE', href: '#about-section' },
     },
     {
@@ -64,7 +64,7 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       paragraph: 'A live snapshot of my GitHub activity — commits and contributions over the past two weeks.',
       thumbnailSrc: 'https://github-readme-activity-graph.vercel.app/graph?username=braiekkk&days=14&hide_title=true&hide_border=true&area=true&color=ff6600&line=ff6600&point=ff6600&area_color=ff6600&bg_color=1a0600',
       minHeight: 260,
-      cta: { label: 'VIEW PROJECT', href: '#projects-section' },
+      cta: { label: 'VIEW PROJECT', href: DATA.contact.social.GitHub.url },
     },
     {
       id: 'certifications',
@@ -83,7 +83,7 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       label: "Let's Connect",
       paragraph: "Let's build something amazing together.",
       minHeight: 120,
-      cta: { label: 'GET IN TOUCH', href: DATA.contact.social.email.url },
+      cta: { label: 'GET IN TOUCH', href: DATA.contact.social.LinkedIn.url },
     },
   ],
 };

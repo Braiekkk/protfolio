@@ -179,34 +179,6 @@ export default function Page() {
           <BlurFadeText text="</Projects>" className={`code-text mb-8 ${textClass}`} />
         </Box>
 
-        {/* Skills */}
-        <Box component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-          <button
-            ref={skillsSectionRef}
-            onClick={() => setSkillsOpen(o => !o)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-          >
-            <BlurFadeText text="<Skills>" className={`code-text ${textClass}`} />
-          </button>
-          <AnimatePresence initial={false}>
-            {skillsOpen && (
-              <motion.div
-                key="skills"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.35, ease: 'easeInOut' }}
-                style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-              >
-                <BlurFade inView yOffset={16} duration={0.6}>
-                  <MatterBox />
-                </BlurFade>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <BlurFadeText text="</Skills>" className={`code-text mb-8 ${textClass}`} />
-        </Box>
-
         {/* About me */}
         <Box id="about-section" component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
           <button
@@ -249,6 +221,34 @@ export default function Page() {
             )}
           </AnimatePresence>
           <BlurFadeText text="</About me>" className={`code-text mb-8 ${textClass}`} />
+        </Box>
+
+        {/* Skills */}
+        <Box component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <button
+            ref={skillsSectionRef}
+            onClick={() => setSkillsOpen(o => !o)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            <BlurFadeText text="<Skills>" className={`code-text ${textClass}`} />
+          </button>
+          <AnimatePresence initial={false}>
+            {skillsOpen && (
+              <motion.div
+                key="skills"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              >
+                <BlurFade inView yOffset={16} duration={0.6}>
+                  <MatterBox />
+                </BlurFade>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <BlurFadeText text="</Skills>" className={`code-text mb-8 ${textClass}`} />
         </Box>
 
       </div>

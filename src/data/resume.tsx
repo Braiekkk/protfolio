@@ -3,7 +3,7 @@ import { HomeIcon, NotebookIcon } from "lucide-react";
 
 export const DATA = {
   name: "Braiek Rayen",
-  initials: "AS",
+  initials: "BR",
   url: "https://saidiadem.github.io",
   location: "San Francisco, CA",
   locationLink: "https://www.google.com/maps/place/sanfrancisco",
@@ -29,28 +29,28 @@ export const DATA = {
     { href: "/", icon: HomeIcon, label: "Home" },
   ],
   contact: {
-    email: "hello@example.com",
+    email: "rayenbraiek555@gmail.com",
     tel: "+123456789",
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://github.com/saidiadem",
+        url: "https://github.com/Braiekkk",
         icon: Icons.github,
 
         navbar: true,
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://linkedin.com/in/adem-saidi-040399280/",
+        url: "https://www.linkedin.com/in/braiek-rayen-b47681258/",
         icon: Icons.linkedin,
 
         navbar: true,
       },
-      
-      
+
+
       email: {
         name: "Send Email",
-        url: "mailto:ademsaidipro@gmail.com",
+        url: "mailto:rayenbraiek555@gmail.com",
         icon: Icons.email,
 
         navbar: true,

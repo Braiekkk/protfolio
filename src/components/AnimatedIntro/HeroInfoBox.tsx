@@ -60,6 +60,8 @@ const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, minHe
       <Box
         component="a"
         href={cta.href}
+        target={cta.href.startsWith('http') ? '_blank' : undefined}
+        rel={cta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
         sx={{
           display: 'inline-block',
           mt: 1,
