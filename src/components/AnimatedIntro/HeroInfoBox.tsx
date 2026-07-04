@@ -14,14 +14,15 @@ interface HeroInfoBoxProps {
   icon: IconComponent;
   label: string;
   cta?: HeroInfoBoxCta;
+  minHeight?: number;
   children: React.ReactNode;
 }
 
-const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, children }) => (
+const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, minHeight = 200, children }) => (
   <Box
     sx={{
       width: 240,
-      minHeight: 200,
+      minHeight,
       display: 'flex',
       flexDirection: 'column',
       p: 2,

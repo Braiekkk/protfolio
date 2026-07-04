@@ -70,12 +70,11 @@ const renderBody = (item: HeroInfoBoxItem) => {
 
 const columnSx = (side: 'left' | 'right') => ({
   position: 'absolute' as const,
-  [side]: '32px',
-  top: '6%',
-  bottom: '6%',
+  [side]: '16px',
+  top: '5%',
   display: { xs: 'none', xl: 'flex' } as const,
   flexDirection: 'column' as const,
-  justifyContent: 'space-between' as const,
+  gap: '48px',
   zIndex: 2,
 });
 
@@ -83,14 +82,14 @@ const HeroSideColumns: React.FC = () => (
   <>
     <Box sx={columnSx('left')}>
       {HERO_INFO_BOXES.left.map((item) => (
-        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta}>
+        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight ?? 200}>
           {renderBody(item)}
         </HeroInfoBox>
       ))}
     </Box>
     <Box sx={columnSx('right')}>
       {HERO_INFO_BOXES.right.map((item) => (
-        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta}>
+        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight ?? 200}>
           {renderBody(item)}
         </HeroInfoBox>
       ))}

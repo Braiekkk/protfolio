@@ -18,6 +18,7 @@ export interface HeroInfoBoxItem {
   techStack?: { name: string; icon: React.ReactNode }[];
   thumbnail?: boolean;
   decoration?: 'mountain' | 'globe';
+  minHeight?: number;
   cta?: { label: string; href: string };
 }
 
@@ -62,6 +63,7 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       title: 'AI Analytics Dashboard',
       paragraph: 'Real-time insights and predictions powered by machine learning.',
       thumbnail: true,
+      minHeight: 260,
       cta: { label: 'VIEW PROJECT', href: '#projects-section' },
     },
     {
@@ -80,6 +82,7 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       icon: Send,
       label: "Let's Connect",
       paragraph: "Let's build something amazing together.",
+      minHeight: 120,
       cta: { label: 'GET IN TOUCH', href: DATA.contact.social.email.url },
     },
   ],
