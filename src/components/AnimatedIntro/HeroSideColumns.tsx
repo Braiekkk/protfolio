@@ -4,19 +4,21 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import HeroInfoBox from './HeroInfoBox';
 import { HERO_INFO_BOXES, HeroInfoBoxItem } from './heroSideContent';
+import { MountainWireframe, GlobeWireframe } from './HeroDecorations';
 
 const renderBody = (item: HeroInfoBoxItem) => {
   if (item.techStack) {
     return (
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+      <Box sx={{
+        flexGrow: 1,
+        display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+        alignContent: 'center', justifyItems: 'center', alignItems: 'center',
+        rowGap: 2.5, columnGap: 1.5,
+        color: '#ff8c00', fontSize: '2.4rem',
+      }}>
         {item.techStack.map((tech) => (
-          <Box key={tech.name} sx={{
-            display: 'flex', alignItems: 'center', gap: 0.5,
-            px: 1, py: 0.4, border: '1px solid #ff6600', borderRadius: '4px',
-            color: '#ff8c00', fontSize: '0.68rem',
-          }}>
+          <Box key={tech.name} title={tech.name} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {tech.icon}
-            <span>{tech.name}</span>
           </Box>
         ))}
       </Box>
@@ -24,9 +26,25 @@ const renderBody = (item: HeroInfoBoxItem) => {
   }
   if (item.bullets) {
     return (
-      <Box component="ul" sx={{ m: 0, pl: 2, display: 'flex', flexDirection: 'column', gap: 0.4 }}>
-        {item.bullets.map((b) => <li key={b}>{b}</li>)}
-      </Box>
+      <>
+        <Box component="ul" sx={{ m: 0, p: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 0.6 }}>
+          {item.bullets.map((b) => (
+            <Box component="li" key={b} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+              <Box sx={{
+                flexShrink: 0, width: 6, height: 6, mt: '0.45em',
+                backgroundColor: '#ff6600', transform: 'rotate(45deg)',
+              }} />
+              <span>{b}</span>
+            </Box>
+          ))}
+        </Box>
+        {item.decoration && (
+          <Box sx={{ mt: 'auto' }}>
+            {item.decoration === 'mountain' && <MountainWireframe />}
+            {item.decoration === 'globe' && <GlobeWireframe />}
+          </Box>
+        )}
+      </>
     );
   }
   return (
@@ -53,11 +71,11 @@ const renderBody = (item: HeroInfoBoxItem) => {
 const columnSx = (side: 'left' | 'right') => ({
   position: 'absolute' as const,
   [side]: '32px',
-  top: '50%',
-  transform: 'translateY(-50%)',
+  top: '6%',
+  bottom: '6%',
   display: { xs: 'none', xl: 'flex' } as const,
   flexDirection: 'column' as const,
-  gap: 3,
+  justifyContent: 'space-between' as const,
   zIndex: 2,
 });
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { User, Code2, Rocket, Star, Shield, Send } from 'lucide-react';
-import { FaReact, FaNodeJs, FaPython, FaDocker } from 'react-icons/fa';
+import { FaReact, FaJava, FaPython, FaDocker } from 'react-icons/fa';
 import { SiTensorflow, SiTypescript } from 'react-icons/si';
 import { DATA } from '@/data/resume';
 
@@ -17,11 +17,13 @@ export interface HeroInfoBoxItem {
   bullets?: string[];
   techStack?: { name: string; icon: React.ReactNode }[];
   thumbnail?: boolean;
+  decoration?: 'mountain' | 'globe';
   cta?: { label: string; href: string };
 }
 
-// PLACEHOLDER CONTENT — rough mockup copy, not final. Replace every string
-// field below with real content; the shape (paragraph/bullets/techStack) can stay.
+// PLACEHOLDER CONTENT — rough mockup copy, not final (except `certifications`,
+// which is real). Replace remaining string fields with real content; the
+// shape (paragraph/bullets/techStack) can stay.
 export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[] } = {
   left: [
     {
@@ -36,11 +38,11 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       icon: Code2,
       label: 'Tech Stack',
       techStack: [
+        { name: 'Java', icon: <FaJava /> },
         { name: 'Python', icon: <FaPython /> },
         { name: 'TensorFlow', icon: <SiTensorflow /> },
         { name: 'React', icon: <FaReact /> },
         { name: 'TypeScript', icon: <SiTypescript /> },
-        { name: 'Node.js', icon: <FaNodeJs /> },
         { name: 'Docker', icon: <FaDocker /> },
       ],
     },
@@ -49,6 +51,7 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       icon: Rocket,
       label: 'Currently Exploring',
       bullets: ['Generative AI', 'MLOps', 'Cloud Architecture'],
+      decoration: 'mountain',
     },
   ],
   right: [
@@ -65,7 +68,12 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       id: 'certifications',
       icon: Shield,
       label: 'Certifications',
-      bullets: ['AWS Certified Developer', 'TensorFlow Developer', 'DeepLearning.AI NLP'],
+      bullets: [
+        'Building LLM Applications With Prompt Engineering',
+        'Supervised Machine Learning: Regression and Classification',
+        'Advanced Learning Algorithms',
+      ],
+      decoration: 'globe',
     },
     {
       id: 'connect',

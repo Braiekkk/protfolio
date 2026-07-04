@@ -21,19 +21,22 @@ const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, child
   <Box
     sx={{
       width: 240,
-      p: 2.25,
+      minHeight: 200,
+      display: 'flex',
+      flexDirection: 'column',
+      p: 2,
       border: '1px solid #ff6600',
-      borderRadius: '8px',
-      backgroundColor: '#1a0600',
-      boxShadow: '0 0 20px rgba(255, 102, 0, 0.25), inset 0 0 40px rgba(255, 102, 0, 0.05)',
+      borderRadius: '16px',
+      background: 'linear-gradient(180deg, #2a0d00 0%, #0d0400 100%)',
+      boxShadow: '0 0 12px rgba(255, 102, 0, 0.15), inset 0 0 24px rgba(255, 102, 0, 0.04)',
       transition: 'box-shadow 0.3s ease',
       '&:hover': {
-        boxShadow: '0 0 35px rgba(255, 102, 0, 0.45), inset 0 0 40px rgba(255, 102, 0, 0.08)',
+        boxShadow: '0 0 20px rgba(255, 102, 0, 0.3), inset 0 0 24px rgba(255, 102, 0, 0.06)',
       },
     }}
   >
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 1 }}>
-      <Icon size={14} color="#ff6600" />
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 1.75 }}>
+      <Icon size={18} color="#ff6600" />
       <Typography component="span" sx={{
         fontFamily: "'Orbitron', sans-serif",
         color: '#ff6600',
@@ -46,7 +49,7 @@ const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, child
       </Typography>
     </Box>
 
-    <Box sx={{ color: '#e0e0e0', fontSize: '0.78rem', lineHeight: 1.6 }}>
+    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', color: '#e0e0e0', fontSize: '0.78rem', lineHeight: 1.5 }}>
       {children}
     </Box>
 
@@ -56,7 +59,7 @@ const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, child
         href={cta.href}
         sx={{
           display: 'inline-block',
-          mt: 1.25,
+          mt: 1,
           color: '#ff8c00',
           fontFamily: "'Orbitron', sans-serif",
           fontSize: '0.7rem',
