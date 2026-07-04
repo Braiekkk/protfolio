@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroInfoBox from './HeroInfoBox';
 import { HERO_INFO_BOXES, HeroInfoBoxItem } from './heroSideContent';
 import { MountainWireframe, GlobeWireframe } from './HeroDecorations';
@@ -11,6 +11,10 @@ import { MountainWireframe, GlobeWireframe } from './HeroDecorations';
 // left/right pairs (row by row) rather than all at once.
 const CARDS_START_DELAY = 0.9;
 const PAIR_STAGGER = 0.25;
+
+// Cards fade and slide off toward their edge over the first stretch of scroll.
+const SCROLL_FADE_DISTANCE = 350;
+const SCROLL_SLIDE_DISTANCE = 100;
 
 const renderBody = (item: HeroInfoBoxItem) => {
   if (item.techStack) {
@@ -85,47 +89,61 @@ const renderBody = (item: HeroInfoBoxItem) => {
   );
 };
 
-const columnSx = (side: 'left' | 'right') => ({
-  position: 'absolute' as const,
+const columnPositionStyle = (side: 'left' | 'right'): React.CSSProperties => ({
+  position: 'absolute',
   [side]: '16px',
   top: '5%',
-  display: { xs: 'none', xl: 'flex' } as const,
-  flexDirection: 'column' as const,
-  gap: '38px',
   zIndex: 2,
 });
 
-const HeroSideColumns: React.FC = () => (
-  <>
-    <Box sx={columnSx('left')}>
-      {HERO_INFO_BOXES.left.map((item, index) => (
-        <motion.div
-          key={item.id}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut', delay: CARDS_START_DELAY + index * PAIR_STAGGER }}
-        >
-          <HeroInfoBox icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
-            {renderBody(item)}
-          </HeroInfoBox>
-        </motion.div>
-      ))}
-    </Box>
-    <Box sx={columnSx('right')}>
-      {HERO_INFO_BOXES.right.map((item, index) => (
-        <motion.div
-          key={item.id}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut', delay: CARDS_START_DELAY + index * PAIR_STAGGER }}
-        >
-          <HeroInfoBox icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
-            {renderBody(item)}
-          </HeroInfoBox>
-        </motion.div>
-      ))}
-    </Box>
-  </>
-);
+const columnLayoutSx = {
+  display: { xs: 'none', xl: 'flex' } as const,
+  flexDirection: 'column' as const,
+  gap: '38px',
+};
+
+const HeroSideColumns: React.FC = () => {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, SCROLL_FADE_DISTANCE], [1, 0]);
+  const xLeft = useTransform(scrollY, [0, SCROLL_FADE_DISTANCE], [0, -SCROLL_SLIDE_DISTANCE]);
+  const xRight = useTransform(scrollY, [0, SCROLL_FADE_DISTANCE], [0, SCROLL_SLIDE_DISTANCE]);
+
+  return (
+    <>
+      <motion.div style={{ ...columnPositionStyle('left'), opacity, x: xLeft }}>
+        <Box sx={columnLayoutSx}>
+          {HERO_INFO_BOXES.left.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: CARDS_START_DELAY + index * PAIR_STAGGER }}
+            >
+              <HeroInfoBox icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
+                {renderBody(item)}
+              </HeroInfoBox>
+            </motion.div>
+          ))}
+        </Box>
+      </motion.div>
+      <motion.div style={{ ...columnPositionStyle('right'), opacity, x: xRight }}>
+        <Box sx={columnLayoutSx}>
+          {HERO_INFO_BOXES.right.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: CARDS_START_DELAY + index * PAIR_STAGGER }}
+            >
+              <HeroInfoBox icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
+                {renderBody(item)}
+              </HeroInfoBox>
+            </motion.div>
+          ))}
+        </Box>
+      </motion.div>
+    </>
+  );
+};
 
 export default HeroSideColumns;

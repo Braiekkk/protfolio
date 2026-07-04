@@ -14,8 +14,32 @@ import BlurFadeText from "../components/magicui/blur-fade-text";
 import BlurFade from "@/components/magicui/blur-fade";
 import { useTheme } from "next-themes";
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+
+// True once `ref`'s element has scrolled up past `thresholdRatio` of the
+// viewport height, false again only once scrolled back down below it. Unlike
+// a plain viewport-intersection check, this doesn't flip back while scrolling
+// further down through the section's own (possibly tall) content.
+function useScrolledPast(ref: React.RefObject<HTMLElement | null>, thresholdRatio = 0.8) {
+  const [passed, setPassed] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      if (!ref.current) return;
+      setPassed(ref.current.getBoundingClientRect().top < window.innerHeight * thresholdRatio);
+    };
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, [ref, thresholdRatio]);
+
+  return passed;
+}
 
 // Lazy load heavy components
 const MatterBox = dynamic(() => import("@/components/DraggableSkills/MatterBox"), {
@@ -83,9 +107,22 @@ export default function Page() {
   ];
   const { theme } = useTheme();
   const textClass = theme === 'light' ? 'text-light' : 'text-dark';
-  const [projectsOpen, setProjectsOpen] = useState(true);
-  const [skillsOpen, setSkillsOpen] = useState(true);
+  const [projectsOpen, setProjectsOpen] = useState(false);
+  const [skillsOpen, setSkillsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(true);
+
+  const projectsSectionRef = useRef<HTMLButtonElement>(null);
+  const projectsSectionInView = useScrolledPast(projectsSectionRef);
+  const skillsSectionRef = useRef<HTMLButtonElement>(null);
+  const skillsSectionInView = useScrolledPast(skillsSectionRef);
+
+  useEffect(() => {
+    setProjectsOpen(projectsSectionInView);
+  }, [projectsSectionInView]);
+
+  useEffect(() => {
+    setSkillsOpen(skillsSectionInView);
+  }, [skillsSectionInView]);
 
   return (
     <main className="flex flex-col w-full">
@@ -98,6 +135,7 @@ export default function Page() {
         {/* Projects */}
         <Box id="projects-section" component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
           <button
+            ref={projectsSectionRef}
             onClick={() => setProjectsOpen(o => !o)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
           >
@@ -114,13 +152,20 @@ export default function Page() {
                 style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
               >
                 {projects.map((project, index) => (
-                  <Box key={index} sx={{ mb: 8 }}>
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3, margin: '0px 0px -20% 0px' }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    style={{ width: '100%', marginBottom: '4rem' }}
+                  >
                     <ProjectShowcase
                       gifUrl={project.gifUrl}
                       description={project.description}
                       techStack={project.techStack}
                     />
-                  </Box>
+                  </motion.div>
                 ))}
               </motion.div>
             )}
@@ -129,29 +174,32 @@ export default function Page() {
         </Box>
 
         {/* Skills */}
-        <button
-          onClick={() => setSkillsOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-        >
-          <BlurFadeText text="<Skills>" className={`code-text ${textClass}`} />
-        </button>
-        <AnimatePresence initial={false}>
-          {skillsOpen && (
-            <motion.div
-              key="skills"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: 'easeInOut' }}
-              style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <BlurFade>
-                <MatterBox />
-              </BlurFade>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <BlurFadeText text="</Skills>" className={`code-text mb-8 ${textClass}`} />
+        <Box component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <button
+            ref={skillsSectionRef}
+            onClick={() => setSkillsOpen(o => !o)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            <BlurFadeText text="<Skills>" className={`code-text ${textClass}`} />
+          </button>
+          <AnimatePresence initial={false}>
+            {skillsOpen && (
+              <motion.div
+                key="skills"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              >
+                <BlurFade inView yOffset={16} duration={0.6}>
+                  <MatterBox />
+                </BlurFade>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <BlurFadeText text="</Skills>" className={`code-text mb-8 ${textClass}`} />
+        </Box>
 
         {/* About me */}
         <Box id="about-section" component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
@@ -171,23 +219,25 @@ export default function Page() {
                 transition={{ duration: 0.35, ease: 'easeInOut' }}
                 style={{ overflow: 'hidden', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
               >
-                <Box sx={{ width: '80%', maxWidth: '600px', margin: '0 auto', height: '60%', maxHeight: '600px' }}>
-                  <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
-                    {carouselItems.map((item, index) => (
-                      <Box key={index} sx={{ mb: 8, textAlign: 'center' }}>
-                        <Image
-                          src={item.imageUrl}
-                          alt={`Carousel item ${index + 1}`}
-                          width={600}
-                          height={400}
-                          loading="lazy"
-                          quality={85}
-                        />
-                        <p>{item.description}</p>
-                      </Box>
-                    ))}
-                  </Carousel>
-                </Box>
+                <BlurFade inView yOffset={16} duration={0.6}>
+                  <Box sx={{ width: '80%', maxWidth: '600px', margin: '0 auto', height: '60%', maxHeight: '600px' }}>
+                    <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
+                      {carouselItems.map((item, index) => (
+                        <Box key={index} sx={{ mb: 8, textAlign: 'center' }}>
+                          <Image
+                            src={item.imageUrl}
+                            alt={`Carousel item ${index + 1}`}
+                            width={600}
+                            height={400}
+                            loading="lazy"
+                            quality={85}
+                          />
+                          <p>{item.description}</p>
+                        </Box>
+                      ))}
+                    </Carousel>
+                  </Box>
+                </BlurFade>
               </motion.div>
             )}
           </AnimatePresence>
