@@ -41,6 +41,8 @@ const AnimatedIntro: React.FC = () => {
     <Box sx={{
       position: 'relative',
       width: '100%',
+      maxWidth: '1500px',
+      mx: 'auto',
       height: '100%',
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0)' : 'translateY(20px)',
@@ -79,7 +81,7 @@ const AnimatedIntro: React.FC = () => {
       <Box sx={{
         position: 'relative',
         width: '100%',
-        maxWidth: '900px',
+        maxWidth: '920px',
         height: '100%',
         mx: 'auto',
         zIndex: 1,

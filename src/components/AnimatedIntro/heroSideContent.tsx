@@ -71,8 +71,8 @@ export const HERO_INFO_BOXES: { left: HeroInfoBoxItem[]; right: HeroInfoBoxItem[
       icon: Shield,
       label: 'Certifications',
       bullets: [
-        'Building LLM Applications With Prompt Engineering',
-        'Supervised Machine Learning: Regression and Classification',
+        'LLM Prompt Engineering',
+        'ML: Regression & Classification',
         'Advanced Learning Algorithms',
       ],
       decoration: 'globe',

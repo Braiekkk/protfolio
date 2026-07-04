@@ -2,15 +2,19 @@
 
 import React from 'react';
 
-const wrapperStyle: React.CSSProperties = {
+interface WireframeProps {
+  height?: number;
+}
+
+const wrapperStyle = (height: number): React.CSSProperties => ({
   display: 'block',
   width: '100%',
-  height: 90,
+  height,
   pointerEvents: 'none',
-};
+});
 
-export const MountainWireframe: React.FC = () => (
-  <svg viewBox="0 0 220 90" style={wrapperStyle} preserveAspectRatio="none">
+export const MountainWireframe: React.FC<WireframeProps> = ({ height = 90 }) => (
+  <svg viewBox="0 0 220 90" style={wrapperStyle(height)} preserveAspectRatio="xMidYMax meet">
     <g stroke="#ff6600" strokeWidth={1} fill="none" opacity={0.4}>
       <polyline points="0,80 40,30 70,55 100,15 130,50 160,25 190,60 220,35" />
       <polyline points="0,85 40,50 70,70 100,40 130,65 160,45 190,72 220,55" />
@@ -24,8 +28,8 @@ export const MountainWireframe: React.FC = () => (
   </svg>
 );
 
-export const GlobeWireframe: React.FC = () => (
-  <svg viewBox="0 0 220 90" style={wrapperStyle} preserveAspectRatio="xMidYMid meet">
+export const GlobeWireframe: React.FC<WireframeProps> = ({ height = 90 }) => (
+  <svg viewBox="0 0 220 90" style={wrapperStyle(height)} preserveAspectRatio="xMaxYMax meet">
     <g stroke="#ff6600" strokeWidth={1} fill="none" opacity={0.4}>
       <circle cx={110} cy={45} r={40} />
       <ellipse cx={110} cy={45} rx={40} ry={14} />

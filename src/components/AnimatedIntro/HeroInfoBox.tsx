@@ -21,6 +21,8 @@ interface HeroInfoBoxProps {
 const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, minHeight = 200, children }) => (
   <Box
     sx={{
+      position: 'relative',
+      overflow: 'hidden',
       width: 240,
       minHeight,
       display: 'flex',
@@ -44,13 +46,13 @@ const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, minHe
         textTransform: 'uppercase',
         letterSpacing: '0.1em',
         fontWeight: 700,
-        fontSize: '0.72rem',
+        fontSize: '0.78rem',
       }}>
         {label}
       </Typography>
     </Box>
 
-    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', color: '#e0e0e0', fontSize: '0.78rem', lineHeight: 1.5 }}>
+    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', color: '#e0e0e0', fontSize: '0.9rem', lineHeight: 1.5 }}>
       {children}
     </Box>
 
@@ -63,7 +65,7 @@ const HeroInfoBox: React.FC<HeroInfoBoxProps> = ({ icon: Icon, label, cta, minHe
           mt: 1,
           color: '#ff8c00',
           fontFamily: "'Orbitron', sans-serif",
-          fontSize: '0.7rem',
+          fontSize: '0.76rem',
           fontWeight: 700,
           letterSpacing: '0.05em',
           textDecoration: 'none',

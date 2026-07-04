@@ -27,7 +27,19 @@ const renderBody = (item: HeroInfoBoxItem) => {
   if (item.bullets) {
     return (
       <>
-        <Box component="ul" sx={{ m: 0, p: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 0.6 }}>
+        {item.decoration && (
+          <Box sx={{
+            position: 'absolute', right: -6, bottom: -6,
+            width: 140, zIndex: 0, opacity: 0.55,
+          }}>
+            {item.decoration === 'mountain' && <MountainWireframe height={110} />}
+            {item.decoration === 'globe' && <GlobeWireframe height={140} />}
+          </Box>
+        )}
+        <Box component="ul" sx={{
+          position: 'relative', zIndex: 1,
+          m: 0, p: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 0.6,
+        }}>
           {item.bullets.map((b) => (
             <Box component="li" key={b} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
               <Box sx={{
@@ -38,12 +50,6 @@ const renderBody = (item: HeroInfoBoxItem) => {
             </Box>
           ))}
         </Box>
-        {item.decoration && (
-          <Box sx={{ mt: 'auto' }}>
-            {item.decoration === 'mountain' && <MountainWireframe />}
-            {item.decoration === 'globe' && <GlobeWireframe />}
-          </Box>
-        )}
       </>
     );
   }
@@ -74,7 +80,7 @@ const columnSx = (side: 'left' | 'right') => ({
   top: '5%',
   display: { xs: 'none', xl: 'flex' } as const,
   flexDirection: 'column' as const,
-  gap: '48px',
+  gap: '38px',
   zIndex: 2,
 });
 
@@ -82,14 +88,14 @@ const HeroSideColumns: React.FC = () => (
   <>
     <Box sx={columnSx('left')}>
       {HERO_INFO_BOXES.left.map((item) => (
-        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight ?? 200}>
+        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
           {renderBody(item)}
         </HeroInfoBox>
       ))}
     </Box>
     <Box sx={columnSx('right')}>
       {HERO_INFO_BOXES.right.map((item) => (
-        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight ?? 200}>
+        <HeroInfoBox key={item.id} icon={item.icon} label={item.label} cta={item.cta} minHeight={item.minHeight}>
           {renderBody(item)}
         </HeroInfoBox>
       ))}
