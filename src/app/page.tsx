@@ -109,12 +109,14 @@ export default function Page() {
   const textClass = theme === 'light' ? 'text-light' : 'text-dark';
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [skillsOpen, setSkillsOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(true);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   const projectsSectionRef = useRef<HTMLButtonElement>(null);
   const projectsSectionInView = useScrolledPast(projectsSectionRef);
   const skillsSectionRef = useRef<HTMLButtonElement>(null);
   const skillsSectionInView = useScrolledPast(skillsSectionRef);
+  const aboutSectionRef = useRef<HTMLButtonElement>(null);
+  const aboutSectionInView = useScrolledPast(aboutSectionRef);
 
   useEffect(() => {
     setProjectsOpen(projectsSectionInView);
@@ -123,6 +125,10 @@ export default function Page() {
   useEffect(() => {
     setSkillsOpen(skillsSectionInView);
   }, [skillsSectionInView]);
+
+  useEffect(() => {
+    setAboutOpen(aboutSectionInView);
+  }, [aboutSectionInView]);
 
   return (
     <main className="flex flex-col w-full">
@@ -204,6 +210,7 @@ export default function Page() {
         {/* About me */}
         <Box id="about-section" component="section" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
           <button
+            ref={aboutSectionRef}
             onClick={() => setAboutOpen(o => !o)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
           >
